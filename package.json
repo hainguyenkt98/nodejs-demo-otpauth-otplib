@@ -1,0 +1,19 @@
+{
+  "name": "nodejs-two-factor-authentication-2fa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "otpauth": "^9.2.3",
+    "otplib": "^12.0.1",
+    "qrcode": "^1.4.4"
+  }
+}
