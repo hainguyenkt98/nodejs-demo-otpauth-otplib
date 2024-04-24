@@ -10,7 +10,7 @@ const { authenticator } = otplib
   * Các bạn có thể thử để linh linh cái secret này thì đến bước quét mã QR sẽ thấy có lỗi ngay.
 */
 const generateUniqueSecret = () => {
-  return authenticator.generateSecret()
+  return authenticator.generateSecret(32)
 }
 
 /** Tạo mã OTP token */
@@ -30,7 +30,7 @@ const verifyOTPToken = (token, secret) => {
 const generateQRCode = async (otpAuth) => {
   try {
     const QRCodeImageUrl = await qrcode.toDataURL(otpAuth)
-    return `<img src='${QRCodeImageUrl}' alt='qr-code-img-hainv' />`
+    return QRCodeImageUrl
   } catch (error) {
     console.log('Could not generate QR code', error)
     return

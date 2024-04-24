@@ -6,7 +6,8 @@ const generateUniqueSecret = () => {
     size: 32
   })
   
-  return secret.base32 // non, base32, buffer is ok
+  return OTPAuth.Secret.fromBase32("hainv").base32
+  // return secret.base32 // non, base32, buffer is ok
 }
 
 const generateOTPToken = (username, serviceName, secret) => {
@@ -46,7 +47,7 @@ const verifyOTPToken = (token, secret) => {
 const generateQRCode = async (otpAuth) => {
   try {
     const QRCodeImageUrl = await qrcode.toDataURL(otpAuth)
-    return `<img src='${QRCodeImageUrl}' alt='qr-code-img-hainv' />`
+    return QRCodeImageUrl
   } catch (error) {
     console.log('Could not generate QR code', error)
     return

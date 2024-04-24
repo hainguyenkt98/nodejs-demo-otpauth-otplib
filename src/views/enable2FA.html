@@ -130,7 +130,8 @@
 					const result = await axios.post('/enable-2fa')
 
 					// Nhận được kết quả thì hiển thị mã QR Code ra màn hình
-					$('#img-qr-code-area').html(result.data.QRCodeImage)
+					$('#img-qr-code-area')
+					.html(`<img src='${result.data.QRCodeImage}' alt='qr-code-img' />`)
 					$('.offset-height').css('height', '0px')
 				} catch (error) {
 					console.log(error)
