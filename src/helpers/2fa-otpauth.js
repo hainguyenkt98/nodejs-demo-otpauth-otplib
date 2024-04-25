@@ -1,9 +1,14 @@
 import qrcode from 'qrcode'
 import * as OTPAuth from "otpauth";
 
+const secretSize = 32
+const digits = 6
+const algorithm = 'SHA1'
+const period = 60
+
 const generateUniqueSecret = () => {
   const secret = new OTPAuth.Secret({
-    size: 32
+    size: secretSize
   })
   
   return OTPAuth.Secret.fromBase32("hainv").base32
@@ -16,9 +21,9 @@ const generateOTPToken = (username, serviceName, secret) => {
   console.log('secret', secret);
 
   const totp = new OTPAuth.TOTP({
-    algorithm: 'SHA1',
-    digits: 6,
-    period: 30,
+    algorithm,
+    digits,
+    period,
     secret: secret,
     issuer: serviceName,
     label: username,
@@ -32,9 +37,9 @@ const generateOTPToken = (username, serviceName, secret) => {
 
 const verifyOTPToken = (token, secret) => {
   let totp = new OTPAuth.TOTP({
-    algorithm: 'SHA1',
-    digits: 6,
-    period: 30,
+    algorithm,
+    digits,
+    period,
     secret: secret
   });
   
