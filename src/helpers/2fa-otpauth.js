@@ -4,7 +4,7 @@ import * as OTPAuth from "otpauth";
 const secretSize = 32
 const digits = 6
 const algorithm = 'SHA1'
-const period = 60
+const period = 30 // change to 15s, 30s, 60s only work with Google Authenticator, but Microsoft Authenticator only work with 30s
 
 const generateUniqueSecret = () => {
   const secret = new OTPAuth.Secret({
@@ -24,13 +24,14 @@ const generateOTPToken = (username, serviceName, secret) => {
     algorithm,
     digits,
     period,
-    secret: secret,
+    secret,
     issuer: serviceName,
     label: username,
   })
 
-  const uri = totp.toString()
+  const uri = OTPAuth.URI.stringify(totp)
   console.log('uri', uri);
+  console.log('uri-convert', OTPAuth.URI.parse(uri));
 
   return uri
 }
@@ -40,10 +41,10 @@ const verifyOTPToken = (token, secret) => {
     algorithm,
     digits,
     period,
-    secret: secret
+    secret
   });
   
-  let delta = totp.validate({ token, window: 1 });
+  let delta = totp.validate({ token });
   console.log('delta', delta);
 
   return delta !== null;
